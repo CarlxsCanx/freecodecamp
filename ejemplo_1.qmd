@@ -1,0 +1,189 @@
+---
+Example for FreeCodeCamp
+---
+```{python}
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+```{python}
+!head data/sales_data.csv
+```
+
+```{python}
+sales = pd.read_csv('data/sales_data.csv',
+parse_dates = ['Date'])
+```
+
+```{python}
+sales.shape
+```
+
+```{python}
+sales.info()
+```
+
+```{python}
+sales['Unit_Cost'].plot(kind = 'box', vert = False, figsize = (14,6))
+
+```
+
+```{python}
+sales['Unit_Cost'].plot(kind ='density', figsize=(16,4))#kde
+```
+
+```{python}
+ax = sales['Unit_Cost'].plot(kind ='density', figsize=(16,4))#kde
+ax.axvline(sales['Unit_Cost'].mean(), color= 'red')
+ax.axvline(sales['Unit_Cost'].median(), color= 'green')
+```
+
+```{python}
+ax  = sales['Unit_Cost'].plot(kind='hist', figsize=(16,4))
+ax.set_xlabel('Number of Sales')
+ax.set_ylabel('Dollars')
+```
+
+```{python}
+sales['Age_Group'].value_counts()
+```
+
+```{python}
+sales['Age_Group'].value_counts().plot(kind='pie', figsize=(6,6))
+```
+
+```{python}
+ax = sales['Age_Group'].value_counts().plot(kind='bar', figsize=(14,6))
+ax.set_xlabel('Number of Sales')
+```
+
+```{python}
+corr = sales.corr(numeric_only = True)
+corr
+```
+
+```{python}
+fig, ax = plt.subplots(figsize = (8,8))
+im= ax.imshow(corr, cmap = 'YlGn')
+ax.tick_params(top = True, labeltop = True, bottom = False, labelbottom = False)
+ax.set_xticks(range(len(corr.columns)), corr.columns, rotation = 'vertical')
+ax.set_yticks(range(len(corr.columns)), corr.columns)
+```
+```{python}
+sales.plot(kind= 'scatter', x = 'Customer_Age', y = 'Revenue', figsize = (6,6))
+
+```
+
+```{python}
+
+sales.plot(kind= 'scatter', x = 'Revenue', y = 'Profit', figsize = (10,6))
+
+```
+
+```{python}
+ax = sales[['Profit', 'Age_Group']].boxplot(by = 'Age_Group', figsize= (10,6))
+ax.set_ylabel('Profit')
+```
+
+```{python}
+boxplot_cols = ['Year', 'Customer_Age', 'Order_Quantity', 'Unit_Cost', 'Unit_Price', 'Profit']
+sales[boxplot_cols].plot(kind='box', subplots=True, layout=(2,3), figsize=(14,8))
+```
+
+```{python}
+sales['Revenue_per_Age'] = sales['Revenue'] / sales['Customer_Age']
+sales['Revenue_per_Age'].head()
+
+```
+```{python}
+sales['Revenue_per_Age'].plot(kind= 'density', figsize= (14,6))
+```
+```{python}
+sales['Revenue_per_Age'].plot(kind= 'hist', figsize= (14,6))
+
+```
+
+```{python}
+sales['Calculated_Cost']  = sales['Order_Quantity']  * sales['Unit_Cost']
+sales['Calculated_Cost'].head()
+```
+
+---
+Carlculated Revenue
+---
+```{python}
+sales['Calculated_Revenue']  = sales['Cost'] + sales['Profit']
+sales['Calculated_Revenue'].head()
+```
+
+```{python}
+(sales['Calculated_Revenue'] != sales['Revenue']).sum() 
+```
+
+```{python}
+sales.head()
+```
+```{python}
+sales['Revenue'].plot(kind='hist', bins=100, figsize=(14,6))
+```
+
+```{python}
+sales['Unit_Price'].head()
+```
+
+
+```{python}
+sales['Unit_Price'] *= 1.03
+
+```
+
+```{python}
+sales['Unit_Price'].head()
+```
+
+
+```{python}
+sales.loc[sales.State == 'Kentucky']
+```
+
+```{python}
+sales.loc[sales.Age_Group == 'Adults (35-64)', 'Revenue'].mean()
+```
+```{python}
+sales.loc[(sales.Age_Group == 'Youth (<25)')| (sales.Age_Group == 'Adults (35-64)')].shape[0]
+```
+
+```{python}
+sales.loc[(sales.Age_Group == 'Adults (35-64)') & (sales.Country == 'United States'), 'Revenue'].mean()
+```
+
+```{python}
+sales.loc[sales.Country == 'France', 'Revenue'].head()
+```
+
+```{python}
+sales.loc[sales.Country == 'France', 'Revenue'] *= 1.1
+```
+
+```{python}
+sales.loc[sales.Country == 'France', 'Revenue'].head()
+```
+
+```{python}
+```
+
+```{python}
+```
+
+```{python}
+```
+
+```{python}
+```
+
+```{python}
+```
+
+```{python}
+```
